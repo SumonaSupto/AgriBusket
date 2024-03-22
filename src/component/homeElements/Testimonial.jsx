@@ -4,7 +4,7 @@ const Testimonial = () => {
     return (
         <>
 <div className='text-center mt-10 mb-10'><h1 className='text-3xl font-semibold brand-font'>Our <span className='text-emerald-400'>Testimonials</span></h1></div>
-    <div className='grid grid-cols-2 grid-rows-2 gap-4'>
+    <div className='grid grid-cols-3 grid-rows-2 gap-4'>
 
         <div className="card w-96 bg-base-100 shadow-xl">
         <figure><img src="https://img.freepik.com/free-photo/smiling-young-man-with-crossed-arms-outdoors_1140-255.jpg?t=st=1710925042~exp=1710928642~hmac=4f856cafd954f0f53644aafe292fd856fcf94d7451ec8c094def14ce82c72574&w=740" alt="Shoes" /></figure>

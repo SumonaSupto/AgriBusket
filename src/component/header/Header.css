@@ -8,11 +8,7 @@ a {
   
   nav {
     width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
     background-color: #ffffff;
-    z-index: 99;
   }
   .logo {
     display: flex;
@@ -74,7 +70,7 @@ a {
     transition: 0.3s;
   }
   
-  ul li a:hover {
+  ul li :hover {
     border-top-color: #59E5A8;
     border-bottom-color: #59E5A8;
     border-right-color: #59E5A8;

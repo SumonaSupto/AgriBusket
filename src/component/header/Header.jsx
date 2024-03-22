@@ -1,5 +1,7 @@
 import React from 'react';
 import "./Header.css"
+import { Link } from 'react-router-dom';
+import { IoMdCart } from "react-icons/io";
 const Header = () => {
     return (
         <>
@@ -14,11 +16,12 @@ const Header = () => {
         </label>
         <input type="checkbox" name="check" id="check" />
         <ul>
-          <li><a href="#">Home</a></li>
+          <li><Link to="/">Home</Link></li>
           <li><a href="#">Product</a></li>
           <li><a href="#">Contact</a></li>
-          <li><a href="#">Sign In</a></li>
-          <li><a href="#">Sign Up</a></li>
+          <li><Link to="/login"> Log In</Link></li>
+          <li><Link to="/regestration"> Sign In</Link></li>
+          <li><IoMdCart style={{ fontSize: '2em' }}/></li>
         </ul>
       </div>
     </nav>
