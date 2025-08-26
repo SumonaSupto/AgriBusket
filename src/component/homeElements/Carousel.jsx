@@ -1,35 +1,92 @@
 import React from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+
+const services = [
+  {
+    title: 'Fresh from Local Farms',
+    img: 'https://images.unsplash.com/photo-1609126986933-e3c84f19d49c?q=80&w=2069&auto=format&fit=crop',
+    desc: 'Seasonal, hand-picked, and chemical-free produce straight to your door.'
+  },
+  {
+    title: 'Doorstep Delivery',
+    img: 'https://plus.unsplash.com/premium_photo-1661409100444-5ab608d6e693?q=80&w=2070&auto=format&fit=crop',
+    desc: 'Fast, eco-friendly delivery to ensure freshness every time.'
+  },
+  {
+    title: 'Support Local Farmers',
+    img: 'https://plus.unsplash.com/premium_photo-1682092047778-a5ebda1804e8?q=80&w=2070&auto=format&fit=crop',
+    desc: 'Every order helps support small-scale farmers and rural communities.'
+  },
+  {
+    title: 'Eco-Friendly Packaging',
+    img: 'https://plus.unsplash.com/premium_photo-1736583008967-d0e92d28ce23?q=80&w=1932&auto=format&fit=crop',
+    desc: 'Sustainable packaging to reduce environmental impact.'
+  }
+];
 
 const Carousel = () => {
-    return (
-        <>
-        <div className='text-center mb-10'><h1 className='text-3xl font-semibold brand-font '>Our <span className='text-emerald-400'>Service</span></h1></div>
-        <div className="carousel w-full">
-  <div id="item1" className="carousel-item w-full flex flex-col">
-    <img src="https://img.freepik.com/free-photo/medical-banner-with-stethoscope_23-2149611199.jpg?t=st=1710916526~exp=1710920126~hmac=64fdeefef439a2cffb518ff4c5674a728304b7dd49ecde3a25e488119fc2dc63&w=740" className="rounded-full mx-auto w-80 h-80" />
-    <div className='text-center mt-5'><h2 className='text-2xl font-semibold brand-font'>24/7 Live Medical<br />Service</h2></div>
-  </div> 
-  <div id="item2" className="carousel-item w-full flex flex-col">
-    <img src="https://img.freepik.com/free-photo/medical-banner-with-doctor-wearing-equipment_23-2149611213.jpg?t=st=1710916618~exp=1710920218~hmac=b38024ace864e26a63c3ca6b4f627e38e1334274d4b672e03e231c4d89f4ab67&w=996" className="rounded-full mx-auto w-80 h-80" />
-    <div className='text-center mt-5'><h2 className='text-2xl font-semibold brand-font'>Pharmacy Helpline</h2></div>
-  </div> 
-  <div id="item3" className="carousel-item w-full flex flex-col">
-    <img src="https://img.freepik.com/free-photo/top-view-with-red-pill-multicolored-pills-macro-red-white-color_482257-31131.jpg?t=st=1710916675~exp=1710920275~hmac=b0c14160ca72a27f278680dc39ddde48241647e0284175df0c241c7a4521f328&w=996" className="rounded-full mx-auto w-80 h-80" />
-    <div className='text-center mt-5'><h2 className='text-2xl font-semibold brand-font'>Authentic Medicine</h2></div>
-  </div> 
-  <div id="item4" className="carousel-item w-full flex flex-col">
-    <img src="https://img.freepik.com/free-photo/microbiology-scientist-typing-biochemistry-discovery-experiment-computer_482257-13961.jpg?t=st=1710916729~exp=1710920329~hmac=0cd84a43d4f87e09e377735b9b04eff33c3869ab20d5a1761bc1e3fa2e658b88&w=996" className="rounded-full mx-auto w-80 h-80" />
-    <div className='text-center mt-5'><h2 className='text-2xl font-semibold brand-font'>Prescribing Tools</h2></div>
-  </div>
-</div> 
-<div className="flex justify-center w-full py-2 gap-2">
-  <a href="#item1" className="btn btn-xs">1</a> 
-  <a href="#item2" className="btn btn-xs">2</a> 
-  <a href="#item3" className="btn btn-xs">3</a> 
-  <a href="#item4" className="btn btn-xs">4</a>
-</div>
-        </>
-    );
+  return (
+    <div className="max-w-6xl mx-auto py-10 px-2 sm:px-4">
+      <div className="text-center mb-8 sm:mb-12">
+        <h1 className="text-2xl sm:text-4xl font-bold tracking-tight brand-font text-gray-800">
+          Our <span className="text-[#1D7603]">Services</span>
+        </h1>
+        <p className="text-gray-500 mt-2 text-base sm:text-lg">What makes us different from others</p>
+      </div>
+
+      <Swiper
+        modules={[Pagination, Autoplay]}
+        spaceBetween={20}
+        slidesPerView={1}
+        pagination={{ clickable: true }}
+        autoplay={{ delay: 3500 }}
+        loop={true}
+        className="pb-8 sm:pb-12"
+        breakpoints={{
+          640: {
+            slidesPerView: 1,
+            spaceBetween: 24,
+          },
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 32,
+          },
+          1024: {
+            slidesPerView: 3,
+            spaceBetween: 40,
+          },
+        }}
+      >
+        {services.map((service, index) => (
+          <SwiperSlide key={index}>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9 }}
+              className="flex flex-col items-center text-center bg-white shadow-xl rounded-2xl p-4 sm:p-8 max-w-xs sm:max-w-xl mx-auto"
+            >
+              <div className="relative">
+                <img
+                  src={service.img}
+                  alt={service.title}
+                  className="rounded-full w-40 h-40 sm:w-60 sm:h-60 object-cover border-4 border-[#1D7603] shadow-md hover:scale-105 transition duration-300"
+                />
+              </div>
+              <h2 className="text-lg sm:text-2xl font-semibold mt-4 sm:mt-6 mb-2 text-[#1D7603]">
+                {service.title}
+              </h2>
+              <p className="text-gray-600 text-sm sm:text-base leading-relaxed max-w-xs sm:max-w-md">
+                {service.desc}
+              </p>
+            </motion.div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div>
+  );
 };
 
 export default Carousel;
