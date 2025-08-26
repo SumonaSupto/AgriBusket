@@ -3,6 +3,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const bodyParser = require('body-parser');
+const path = require('path');
 require('dotenv').config();
 
 // Suppress punycode deprecation warning
@@ -54,8 +55,24 @@ const limiter = rateLimit({
 app.use(limiter);
 
 // CORS configuration
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'https://israt18.cse.pstu.ac.bd', // Replace with your actual domain
+  process.env.CORS_ORIGIN
+].filter(Boolean);
+
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+  origin: function (origin, callback) {
+    // Allow requests with no origin (mobile apps, etc.)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -106,21 +123,51 @@ app.use('/api/testimonials', testimonialRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/admin', adminRoutes);
 
-// Welcome route
-app.get('/', (req, res) => {
-  res.json({
-    message: 'Welcome to AgriBasket API',
-    version: '1.0.0',
-    documentation: '/api/docs',
-    status: 'running'
+// Serve static files from the frontend build directory in production
+if (process.env.NODE_ENV === 'production') {
+  const frontendPath = path.join(__dirname, '..', 'home', 'ug2002056', 'public_html');
+  
+  // Serve static files
+  app.use(express.static(frontendPath));
+  
+  // Handle React Router - send all non-API requests to index.html
+  app.get('*', (req, res) => {
+    // Skip API routes
+    if (req.path.startsWith('/api/')) {
+      return res.status(404).json({
+        success: false,
+        message: `API Route ${req.originalUrl} not found`
+      });
+    }
+    
+    res.sendFile(path.join(frontendPath, 'index.html'), (err) => {
+      if (err) {
+        console.error('Error serving index.html:', err);
+        res.status(500).json({
+          success: false,
+          message: 'Error serving application'
+        });
+      }
+    });
   });
-});
+} else {
+  // Development welcome route
+  app.get('/', (req, res) => {
+    res.json({
+      message: 'Welcome to AgriBasket API - Development Mode',
+      version: '1.0.0',
+      documentation: '/api/docs',
+      status: 'running',
+      frontend: 'Run separately on port 5173'
+    });
+  });
+}
 
-// 404 handler
-app.use('*', (req, res) => {
+// 404 handler for API routes only
+app.use('/api/*', (req, res) => {
   res.status(404).json({
     success: false,
-    message: `Route ${req.originalUrl} not found`
+    message: `API Route ${req.originalUrl} not found`
   });
 });
 

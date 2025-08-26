@@ -6,8 +6,17 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:prod": "vite build --mode production",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "bash deploy.sh",
+    "server:dev": "cd server && npm run dev",
+    "server:start": "cd server && npm start",
+    "pm2:start": "bash pm2-manage.sh start",
+    "pm2:stop": "bash pm2-manage.sh stop",
+    "pm2:restart": "bash pm2-manage.sh restart",
+    "pm2:status": "bash pm2-manage.sh status",
+    "pm2:logs": "bash pm2-manage.sh logs"
   },
   "dependencies": {
     "framer-motion": "^12.12.2",
